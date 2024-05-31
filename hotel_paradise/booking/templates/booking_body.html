@@ -1,0 +1,55 @@
+{% load static %}
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
+            <h1 class="mb-5">Book A <span class="text-primary text-uppercase">Luxury Room</span></h1>
+        </div>
+        <div class="row g-5">
+            {% if selected_room %}
+            <div class="col-lg-6">
+                <div class="row g-2">
+                    <div class="text-end">
+                        <!-- Фотография комнаты -->
+                        <img class="img-fluid rounded w-300 wow zoomIn d-flex" data-wow-delay="0.1s" src="{{ selected_room.image.url }}" style="margin: auto;" >
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="{% if selected_room %}col-lg-6{% else %}col-lg-12{% endif %}">
+                <div class="wow fadeInUp" data-wow-delay="0.2s">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                        {% for field in form %}
+                            {% if field.name != 'special_request' and field.name != 'room'%}
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ field }}
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                </div>
+                            </div>  
+                            {% endif %}
+                        {% endfor %}
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{form.room}}
+                                <label for="{{ form.room.id_for_label }}">{{ form.room.label }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{form.special_request}}
+                                <label for="{{ form.special_request.id_for_label }}">{{ form.special_request.label }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
