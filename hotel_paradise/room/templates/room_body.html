@@ -1,0 +1,67 @@
+{% load static %}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
+            <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
+        </div>
+        <!--  Code from DB  -->
+        {% for room in rooms %}
+
+            {% if forloop.counter0|divisibleby:3 %}
+                <div class="row g-4">
+            {% endif %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="room-item shadow rounded overflow-hidden">
+                            <div class="position-relative">
+                                <!--  Image of room  -->
+                                <img class="img-fluid" src={{ room.image.url }} alt="">
+                                <!--  Price per night  -->
+                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">${{room.price_per_night}}/Night</small>
+                            </div>
+                            <div class="p-4 mt-2">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <!--  Room Title  -->
+                                    <h5 class="mb-0">{{ room.title }}</h5>
+                                    <div class="ps-2">
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <!--  Count of bedrooms  -->
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{room.bedroom_count}} Bed</small>
+                                    <!--  Count of bathrooms  -->
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>{{room.bathroom_count}} Bath</small>
+                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                                </div>
+                                <p class="text-body mb-3">
+                                    <span class="short-description">{{ room.description|slice:":75" }}</span>
+                                    <span class="long-description" style="display:none;">{{ room.description }}</span>
+                                    <button class="btn btn-link toggle-description">Read more</button>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="#">View Detail</a> 
+                                    {% if room.available %}
+                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="{% url 'booking' room_id=room.id %}">Book Now</a>
+                                    {% else %}
+                                    
+                                    <h3 class="text-danger">Not Available</h3>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% if forloop.counter|divisibleby:3 or forloop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="{%static 'js/read_more.js' %}"></script>
