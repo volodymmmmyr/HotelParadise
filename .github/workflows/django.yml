@@ -37,4 +37,4 @@ jobs:
 
     - name: Run Tests
       run: |
-        python hotel_paradise/manage.py test
+        python hotel_paradise/manage.py test hotel_paradise/
